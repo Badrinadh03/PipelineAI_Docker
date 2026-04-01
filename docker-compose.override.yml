@@ -1,0 +1,25 @@
+# Merged automatically by `docker compose` with docker-compose.yaml.
+# Eases local dev when the default 4 gunicorn workers are too heavy and the
+# webserver hits "No response from gunicorn master within 120 seconds" then exits.
+services:
+  airflow-init:
+    environment:
+      # Example DAGs/plugins can be very heavy (pandas/pyarrow) and may exceed
+      # default import timeouts, which blocks webserver startup.
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+  airflow-webserver:
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__WORKERS: "1"
+      AIRFLOW__WEBSERVER__WEB_SERVER_MASTER_TIMEOUT: "300"
+  airflow-scheduler:
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+
+  airflow-worker:
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+
+  airflow-triggerer:
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"

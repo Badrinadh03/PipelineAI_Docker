@@ -1,0 +1,41 @@
+[2026-03-31T04:49:16.211+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-03-31T04:49:16.231+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: test_failing_pipeline.transform manual_test_002 [queued]>
+[2026-03-31T04:49:16.237+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: test_failing_pipeline.transform manual_test_002 [queued]>
+[2026-03-31T04:49:16.238+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-03-31T04:49:16.249+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): transform> on 2026-03-31 04:49:13.656942+00:00
+[2026-03-31T04:49:16.254+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=476) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-03-31T04:49:16.256+0000] {standard_task_runner.py:64} INFO - Started process 477 to run task
+[2026-03-31T04:49:16.256+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'test_failing_pipeline', 'transform', 'manual_test_002', '--job-id', '15', '--raw', '--subdir', 'DAGS_FOLDER/test_failing_dag.py', '--cfg-path', '/tmp/tmp4738swyp']
+[2026-03-31T04:49:16.257+0000] {standard_task_runner.py:91} INFO - Job 15: Subtask transform
+[2026-03-31T04:49:16.300+0000] {task_command.py:426} INFO - Running <TaskInstance: test_failing_pipeline.transform manual_test_002 [running]> on host 917b115b25a1
+[2026-03-31T04:49:17.010+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='test_failing_pipeline' AIRFLOW_CTX_TASK_ID='transform' AIRFLOW_CTX_EXECUTION_DATE='2026-03-31T04:49:13.656942+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual_test_002'
+[2026-03-31T04:49:17.017+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-03-31T04:49:17.447+0000] {logging_mixin.py:188} INFO - Starting transformation...
+[2026-03-31T04:49:17.556+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-03-31T04:49:17.716+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/test_failing_dag.py", line 12, in transform
+    raise ValueError("Column 'user_id' not found in dataset. Schema mismatch detected.")
+ValueError: Column 'user_id' not found in dataset. Schema mismatch detected.
+[2026-03-31T04:49:18.283+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=test_failing_pipeline, task_id=transform, run_id=manual_test_002, execution_date=20260331T044913, start_date=20260331T044916, end_date=20260331T044918
+[2026-03-31T04:49:18.496+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 15 for task transform (Column 'user_id' not found in dataset. Schema mismatch detected.; 477)
+[2026-03-31T04:49:18.805+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-03-31T04:49:20.000+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-03-31T04:49:20.891+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
